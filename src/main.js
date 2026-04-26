@@ -208,10 +208,11 @@ if (entrance && brandName && dustCanvas) {
     entrance.style.display = 'none'
     animateHeroElements()
   } else {
+    // DRATICALLY SPEED UP INTRO FOR LCP (Total ~1s instead of ~3s)
     gsap.timeline()
-      .to(brandName, { opacity: 1, scale: 1, duration: 1.5, ease: 'power3.out', onStart: animateDust })
-      .to(brandName, { scale: 1.1, duration: 0.5, ease: 'power2.inOut' })
-      .to(entrance, { opacity: 0, duration: 0.8, ease: 'power2.inOut', onComplete: () => {
+      .to(brandName, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out', onStart: animateDust })
+      .to(brandName, { scale: 1.05, duration: 0.2, ease: 'power1.inOut' })
+      .to(entrance, { opacity: 0, duration: 0.4, ease: 'power2.inOut', onComplete: () => {
         entrance.style.display = 'none'
         sessionStorage.setItem('hasSeenIntro', 'true')
         animateHeroElements()
@@ -406,6 +407,15 @@ if (splitHeading) {
   })
 }
 
-// Initialize
-loadSiteSettings()
-fetchCaseStudies()
+// Initialize - Defer for better LCP
+if (window.requestIdleCallback) {
+  requestIdleCallback(() => {
+    loadSiteSettings()
+    fetchCaseStudies()
+  })
+} else {
+  setTimeout(() => {
+    loadSiteSettings()
+    fetchCaseStudies()
+  }, 100)
+}

@@ -8,9 +8,17 @@
     <meta name="theme-color" content="#0d362e" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg">
+    <link rel="shortcut icon" href="/favicon.jpg" type="image/x-icon">
     <title>ESET Creatives | Creative Partner for CMOs</title>
     <meta name="description"
         content="E-commerce Growth Agency. We are the creative powerhouse pushing ROI through compelling Social Media Marketing, Brand Identity Development, Web Dev, and Photography & Videography." />
+    
+    <!-- Preloads for LCP Improvement -->
+    <link rel="preload" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&f[]=space-grotesk@400,500,600,700&display=swap" as="style">
+    <link rel="preload" href="/logo.png" as="image">
+    <link rel="preload" href="logo_dark.png" as="image">
+
     <link
         href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&f[]=space-grotesk@400,500,600,700&display=swap"
         rel="stylesheet">
@@ -24,7 +32,7 @@
     <div id="entrance" class="fixed inset-0 z-[110] flex items-center justify-center bg-white overflow-hidden">
         <canvas id="dustCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
         <img id="brand-name" src="logo_dark.png" alt="ESET Creatives"
-            class="w-64 md:w-[400px] h-auto relative z-10 opacity-0 transform">
+            class="w-64 md:w-[400px] h-auto relative z-10 opacity-0 transform" fetchpriority="high">
     </div>
 
     <!-- Page Transition Curtain -->
@@ -104,7 +112,7 @@
                     class="hero-el opacity-0 transform translate-y-12 text-accent font-semibold tracking-widest text-xs md:text-sm uppercase">
                     A MULTIDISCIPLINARY CREATIVE STUDIO</p>
                 <h1
-                    class="hero-el opacity-0 transform translate-y-12 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight md:leading-tight lg:leading-tight">
+                    class="hero-el opacity-0 transform translate-y-12 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-tight md:leading-tight lg:leading-tight" fetchpriority="high">
                     Visual Authority for<br class="hidden md:block" />Ethiopia's Leading Brands.
                 </h1>
                 <p
