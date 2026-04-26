@@ -11,7 +11,8 @@ export default defineConfig({
       input: {
         main: './index.html',
         admin: './admin.html',
-        caseStudy: './case-study.html'
+        caseStudy: './case-study.html',
+        links: './links.html'
       }
     }
   }
