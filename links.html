@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESET Creatives | Connections</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&f[]=space-grotesk@400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d362e; /* Brand dark green from your screenshot */
+            --accent: #b8e11e;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'General Sans', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Background Glows */
+        .glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            filter: blur(120px);
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 60px 24px;
+            text-align: center;
+        }
+
+        /* Profile Section */
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+            margin: 0 auto 24px;
+            display: block;
+            box-shadow: 0 0 20px rgba(184, 225, 30, 0.2);
+            background: rgba(255, 255, 255, 0.05); /* Placeholder background */
+        }
+
+        .profile-img:not([src]) {
+            display: none;
+        }
+
+        .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .description {
+            font-size: 15px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .social-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+            transform: translateY(-3px);
+        }
+
+        /* Link Buttons */
+        .link-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .link-bar {
+            display: block;
+            width: 100%;
+            padding: 18px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px; /* Matches the screenshot rounded look */
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .link-bar:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.02);
+        }
+
+        .link-bar.featured {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(184, 225, 30, 0.2);
+        }
+
+        /* Footer */
+        .footer-logo {
+            margin-top: 60px;
+            opacity: 0.3;
+            height: 20px;
+        }
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow" style="top: -100px; left: -100px;"></div>
+    <div class="glow" style="bottom: -100px; right: -100px;"></div>
+
+    <div class="container" id="links-container">
+        <!-- Profile Section -->
+        <header>
+            <img id="bio-img" class="profile-img" alt="Profile">
+            <h1 id="bio-name" class="name"></h1>
+            <p id="bio-desc" class="description"></p>
+        </header>
+
+        <!-- Social Links Section -->
+        <div class="social-icons" id="social-row">
+            <!-- Icons injected here -->
+        </div>
+
+        <!-- Main Link Stack -->
+        <div class="link-stack" id="link-stack">
+            <!-- CMS Buttons injected here -->
+        </div>
+
+        <footer>
+            <!-- Footer logo removed -->
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="/src/links.js"></script>
+</body>
+</html>
