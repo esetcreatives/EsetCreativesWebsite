@@ -1,9 +1,13 @@
 import './style.css'
+import { inject } from '@vercel/speed-insights'
 import { createClient } from '@supabase/supabase-js'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from '@studio-freight/lenis'
 import SplitType from 'split-type'
+
+// Initialize Speed Insights
+inject()
 
 gsap.registerPlugin(ScrollTrigger)
 

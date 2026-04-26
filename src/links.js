@@ -1,4 +1,8 @@
+import { inject } from '@vercel/speed-insights'
 import { createClient } from '@supabase/supabase-js'
+
+// Initialize Speed Insights
+inject()
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
