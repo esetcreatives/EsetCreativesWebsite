@@ -82,11 +82,14 @@ const lenis = new Lenis({
   smooth: true,
 })
 
-function raf(time) {
-  lenis.raf(time)
-  requestAnimationFrame(raf)
-}
-requestAnimationFrame(raf)
+// Sync ScrollTrigger with Lenis
+lenis.on('scroll', ScrollTrigger.update)
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000)
+})
+
+gsap.ticker.lagSmoothing(0)
 
 // ==================== BACKGROUND CANVAS ====================
 const canvas = document.getElementById('bg-canvas')
@@ -123,17 +126,28 @@ if (canvas) {
 
   const particles = []
   const isMobile = window.innerWidth < 768
-  const particleCount = isMobile ? 20 : 50 // Reduced from 40/120 for better performance
+  const particleCount = isMobile ? 15 : 40 // Further reduced for performance
   for (let i = 0; i < particleCount; i++) particles.push(new Particle())
 
+  let animationFrameId
   function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     for (let i = 0; i < particles.length; i++) {
       particles[i].update()
       particles[i].draw()
     }
-    requestAnimationFrame(animateParticles)
+    animationFrameId = requestAnimationFrame(animateParticles)
   }
+  
+  // Only animate when tab is active
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animationFrameId)
+    } else {
+      animateParticles()
+    }
+  })
+  
   animateParticles()
 
   window.addEventListener('resize', () => {
@@ -250,8 +264,16 @@ if (mobileMenuToggle && mobileMenu) {
 // ==================== SCROLL ANIMATIONS ====================
 gsap.utils.toArray('.fade-up').forEach(el => {
   gsap.from(el, {
-    scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none reverse' },
-    opacity: 0, y: 50, duration: 1, ease: 'power3.out'
+    scrollTrigger: { 
+      trigger: el, 
+      start: 'top 85%', // Slightly later start for smoother feel
+      toggleActions: 'play none none reverse',
+      fastScrollEnd: true // Performance optimization for fast scrolling
+    },
+    opacity: 0, 
+    y: 30, // Reduced distance for smoother look
+    duration: 0.8, 
+    ease: 'power2.out'
   })
 })
 
@@ -291,7 +313,7 @@ function renderProjects(projects) {
     return `
       <div class="case-study-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" data-project-slug="${p.slug}">
         <div class="relative h-64 overflow-hidden">
-          <img src="${p.hero_image}" alt="${p.title}" class="case-study-image w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <img src="${p.hero_image}" alt="${p.title}" class="case-study-image w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" width="800" height="600">
           <div class="absolute top-4 right-4 flex gap-2 flex-wrap justify-end">${tagsHtml}</div>
           <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         </div>

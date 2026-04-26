@@ -28,11 +28,14 @@ const lenis = new Lenis({
   infinite: false,
 })
 
-function raf(time) {
-  lenis.raf(time)
-  requestAnimationFrame(raf)
-}
-requestAnimationFrame(raf)
+// Sync ScrollTrigger with Lenis
+lenis.on('scroll', ScrollTrigger.update)
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000)
+})
+
+gsap.ticker.lagSmoothing(0)
 
 // GSAP ScrollTrigger Integration with Lenis
 gsap.registerPlugin(ScrollTrigger)
@@ -94,7 +97,7 @@ function renderProject(project) {
   } else {
     heroBackgroundHtml = `
       <div class="absolute inset-0 z-0 w-full h-full overflow-hidden bg-slate-100">
-        <img src="${project.hero_image}" alt="${project.title}" class="w-full h-full object-cover opacity-20 mix-blend-multiply scale-105">
+        <img src="${project.hero_image}" alt="${project.title}" class="w-full h-full object-cover opacity-20 mix-blend-multiply scale-105" fetchpriority="high">
         <div class="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/50 to-slate-50"></div>
       </div>
     `
@@ -126,7 +129,7 @@ function renderProject(project) {
         <div class="space-y-12 md:space-y-24 max-w-7xl mx-auto">
           ${project.gallery.map(img => `
             <div class="gallery-item w-full px-4 md:px-12">
-              <img src="${img}" alt="Project Showcase" class="w-full h-auto object-cover rounded-3xl shadow-xl border border-slate-100">
+              <img src="${img}" alt="Project Showcase" class="w-full h-auto object-cover rounded-3xl shadow-xl border border-slate-100" loading="lazy" width="1600" height="900">
             </div>
           `).join('')}
         </div>
@@ -264,13 +267,14 @@ function initAnimations() {
   // Story Blocks fade in
   gsap.utils.toArray('.story-block').forEach(block => {
     gsap.fromTo(block, 
-      { y: 50, opacity: 0 },
+      { y: 30, opacity: 0 },
       { 
-        y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+        y: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
         scrollTrigger: {
           trigger: block,
           start: 'top 85%',
-          toggleActions: 'play none none reverse'
+          toggleActions: 'play none none reverse',
+          fastScrollEnd: true
         }
       }
     )
