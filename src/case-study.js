@@ -1,12 +1,14 @@
 import './style.css'
 import { injectSpeedInsights } from '@vercel/speed-insights'
+import { inject } from '@vercel/analytics'
 import { createClient } from '@supabase/supabase-js'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from '@studio-freight/lenis'
 
-// Initialize Speed Insights
+// Initialize Vercel Services
 injectSpeedInsights()
+inject()
 
 // Initialize Supabase
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
