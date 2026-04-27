@@ -83,22 +83,23 @@ function renderProject(project) {
   let heroBackgroundHtml = ''
   if (project.youtube_id) {
     heroBackgroundHtml = `
-      <div class="absolute inset-0 z-0 w-full h-full overflow-hidden bg-slate-100">
+      <div class="absolute inset-0 z-0 w-full h-full overflow-hidden bg-[#0d362e]">
         <iframe 
-          class="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20 mix-blend-multiply object-cover"
+          class="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-40 mix-blend-screen object-cover"
           src="https://www.youtube.com/embed/${project.youtube_id}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=${project.youtube_id}&modestbranding=1" 
           frameborder="0" 
           allow="autoplay; encrypted-media" 
           allowfullscreen>
         </iframe>
-        <div class="absolute inset-0 bg-slate-50/80 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0d362e]/80 via-[#0d362e]/50 to-[#0d362e]"></div>
       </div>
     `
   } else {
     heroBackgroundHtml = `
-      <div class="absolute inset-0 z-0 w-full h-full overflow-hidden bg-slate-100">
-        <img src="${project.hero_image}" alt="${project.title}" class="w-full h-full object-cover opacity-20 mix-blend-multiply scale-105" fetchpriority="high">
-        <div class="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/50 to-slate-50"></div>
+      <div class="absolute inset-0 z-0 w-full h-full overflow-hidden bg-[#0d362e]">
+        <img src="${project.hero_image}" alt="${project.title}" class="w-full h-full object-cover opacity-50 scale-105" fetchpriority="high">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0d362e] via-[#0d362e]/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0d362e] via-transparent to-transparent opacity-80"></div>
       </div>
     `
   }
@@ -107,14 +108,14 @@ function renderProject(project) {
   let quoteHtml = ''
   if (project.client_quote) {
     quoteHtml = `
-      <div class="max-w-4xl mx-auto px-6 md:px-12 py-24 md:py-32 border-y border-slate-200 my-24 bg-white/50 backdrop-blur-sm rounded-3xl shadow-sm">
-        <blockquote class="text-3xl md:text-5xl font-heading font-bold text-brand-dark text-center leading-tight mb-8">
+      <div class="max-w-4xl mx-auto px-6 md:px-12 py-24 md:py-32 border-y border-white/10 my-24 bg-white/5 backdrop-blur-sm rounded-3xl shadow-sm">
+        <blockquote class="text-3xl md:text-5xl font-heading font-bold text-white text-center leading-tight mb-8">
           "${project.client_quote}"
         </blockquote>
         ${project.client_name ? `
           <div class="text-center">
-            <div class="text-slate-900 font-bold text-xl uppercase tracking-widest">${project.client_name}</div>
-            ${project.client_role ? `<div class="text-slate-500 mt-2">${project.client_role}</div>` : ''}
+            <div class="text-white font-bold text-xl uppercase tracking-widest">${project.client_name}</div>
+            ${project.client_role ? `<div class="text-accent mt-2">${project.client_role}</div>` : ''}
           </div>
         ` : ''}
       </div>
@@ -129,7 +130,7 @@ function renderProject(project) {
         <div class="space-y-12 md:space-y-24 max-w-7xl mx-auto">
           ${project.gallery.map(img => `
             <div class="gallery-item w-full px-4 md:px-12">
-              <img src="${img}" alt="Project Showcase" class="w-full h-auto object-cover rounded-3xl shadow-xl border border-slate-100" loading="lazy" width="1600" height="900">
+              <img src="${img}" alt="Project Showcase" class="w-full h-auto object-cover rounded-3xl shadow-2xl border border-white/10" loading="lazy" width="1600" height="900">
             </div>
           `).join('')}
         </div>
@@ -141,23 +142,19 @@ function renderProject(project) {
   let metricsHtml = ''
   if (project.metrics && Object.keys(project.metrics).length > 0) {
     metricsHtml = `
-      <div id="sticky-metrics" class="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-xl">
-        <h4 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-8">Measurable Impact</h4>
+      <div id="sticky-metrics" class="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-10 shadow-xl backdrop-blur-md">
+        <h4 class="text-sm font-bold text-white/50 uppercase tracking-widest mb-8">Measurable Impact</h4>
         <div class="space-y-8">
           ${Object.entries(project.metrics).map(([key, value]) => `
-            <div class="border-b border-slate-100 pb-8 last:border-0 last:pb-0">
-              <div class="text-4xl md:text-5xl font-bold text-brand-mid mb-2">${value}</div>
-              <div class="text-sm text-slate-500 font-semibold uppercase tracking-widest">${key}</div>
+            <div class="border-b border-white/10 pb-8 last:border-0 last:pb-0">
+              <div class="text-4xl md:text-5xl font-bold text-accent mb-2">${value}</div>
+              <div class="text-sm text-white/70 font-semibold uppercase tracking-widest">${key}</div>
             </div>
           `).join('')}
         </div>
       </div>
     `
   }
-
-  // Make sure body is light
-  document.body.classList.add('bg-slate-50', 'text-slate-900')
-  document.body.classList.remove('bg-[#0F172A]', 'text-white')
 
   container.innerHTML = `
     <!-- The Hero -->
@@ -166,17 +163,17 @@ function renderProject(project) {
       
       <div class="relative z-10 max-w-7xl mx-auto w-full">
         <div class="flex flex-wrap gap-2 mb-6 hero-anim">
-          <span class="px-4 py-1.5 bg-white/90 text-slate-700 text-xs font-bold rounded-full uppercase tracking-widest border border-slate-200 shadow-sm backdrop-blur-md">
+          <span class="px-4 py-1.5 bg-white/10 text-white text-xs font-bold rounded-full uppercase tracking-widest border border-white/20 backdrop-blur-md">
             ${project.category.replace('-', ' ')}
           </span>
         </div>
         
-        <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-slate-950 leading-[1.05] tracking-tight mb-8 max-w-5xl">
+        <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white leading-[1.05] tracking-tight mb-8 max-w-5xl">
           ${project.title}
         </h1>
         
-        <p class="hero-motto text-xl md:text-2xl text-slate-600 font-medium tracking-wide uppercase">
-          <span class="text-brand-mid font-bold">Deep Craft.</span> Distinct Value.
+        <p class="hero-motto text-xl md:text-2xl text-white/70 font-medium tracking-wide uppercase">
+          <span class="text-accent font-bold">Deep Craft.</span> Distinct Value.
         </p>
       </div>
     </div>
@@ -188,29 +185,29 @@ function renderProject(project) {
       <div class="lg:col-span-7 space-y-20">
         <!-- The Challenge -->
         <div class="story-block">
-          <h3 class="flex items-center gap-4 text-3xl md:text-4xl font-heading font-bold text-slate-950 mb-8">
+          <h3 class="flex items-center gap-4 text-3xl md:text-4xl font-heading font-bold text-white mb-8">
             <span class="w-12 h-1 bg-accent"></span> 
             The Challenge
           </h3>
-          <p class="text-slate-600 text-xl leading-relaxed font-light whitespace-pre-wrap">${project.challenge}</p>
+          <p class="text-white/70 text-lg md:text-xl leading-relaxed font-light whitespace-pre-wrap">${project.challenge}</p>
         </div>
 
         <!-- The Solution -->
         <div class="story-block">
-          <h3 class="flex items-center gap-4 text-3xl md:text-4xl font-heading font-bold text-slate-950 mb-8">
+          <h3 class="flex items-center gap-4 text-3xl md:text-4xl font-heading font-bold text-white mb-8">
             <span class="w-12 h-1 bg-brand-mid"></span> 
             The Solution
           </h3>
-          <p class="text-slate-600 text-xl leading-relaxed font-light whitespace-pre-wrap">${project.solution}</p>
+          <p class="text-white/70 text-lg md:text-xl leading-relaxed font-light whitespace-pre-wrap">${project.solution}</p>
         </div>
 
         <!-- The Results -->
         <div class="story-block">
-          <h3 class="flex items-center gap-4 text-3xl md:text-4xl font-heading font-bold text-slate-950 mb-8">
-            <span class="w-12 h-1 bg-brand-light"></span> 
+          <h3 class="flex items-center gap-4 text-3xl md:text-4xl font-heading font-bold text-white mb-8">
+            <span class="w-12 h-1 bg-white"></span> 
             The Results
           </h3>
-          <p class="text-slate-600 text-xl leading-relaxed font-light whitespace-pre-wrap">${project.results}</p>
+          <p class="text-white/70 text-lg md:text-xl leading-relaxed font-light whitespace-pre-wrap">${project.results}</p>
         </div>
       </div>
 
