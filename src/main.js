@@ -313,7 +313,7 @@ function renderProjects(projects) {
 
     return `
       <div class="case-study-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer" data-project-slug="${p.slug}">
-        <div class="relative h-64 overflow-hidden">
+        <div class="relative h-56 md:h-72 overflow-hidden">
           <img src="${p.hero_image}" alt="${p.title}" class="case-study-image w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" width="800" height="600">
           <div class="absolute top-4 right-4 flex gap-2 flex-wrap justify-end">${tagsHtml}</div>
           <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

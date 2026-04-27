@@ -358,15 +358,7 @@ img {
   }
 }
 
-/* Performance: Content Visibility */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 1000px;
-}
-
-#hero, #bg-canvas, nav {
-  content-visibility: visible;
-}
+/* Performance: Content Visibility removed to fix clipping on some devices */
 
 /* Optimize animations */
 .fade-up, .case-study-card, .service-card {

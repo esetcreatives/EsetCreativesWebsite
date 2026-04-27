@@ -25,7 +25,7 @@
     <script type="module" src="src/main.js"></script>
 </head>
 
-<body class="relative min-h-screen">
+<body class="relative min-h-screen overflow-x-hidden w-full">
     <canvas id="bg-canvas"></canvas>
 
     <!-- Cinematic Entrance Overlay -->
@@ -42,7 +42,7 @@
     <!-- Navigation -->
     <nav
         class="fixed top-0 w-full z-50 py-3 md:py-6 px-4 md:px-12 flex justify-between items-center bg-slate-950/40 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
-        <a href="#hero" class="hover:opacity-80 transition-opacity">
+        <a href="#hero" class="flex items-center shrink-0 hover:opacity-80 transition-opacity">
             <img src="/logo.png" alt="ESET Creatives" class="h-6 md:h-8 w-auto">
         </a>
 
@@ -65,7 +65,7 @@
 
             <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-toggle" aria-label="Toggle Mobile Menu"
-                class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 z-[120]">
+                class="lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 z-[120] shrink-0">
                 <span class="w-6 h-0.5 bg-white transition-transform duration-300"></span>
                 <span class="w-6 h-0.5 bg-white transition-opacity duration-300"></span>
                 <span class="w-6 h-0.5 bg-white transition-transform duration-300"></span>
@@ -75,7 +75,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu"
-        class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-[115] translate-x-full lg:hidden flex flex-col items-center justify-center gap-8 text-3xl font-heading font-bold text-white">
+        class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-[115] translate-x-full lg:hidden flex flex-col items-center justify-start pt-28 pb-12 overflow-y-auto gap-8 text-3xl font-heading font-bold text-white">
 
         <!-- Background decoration to match branding -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -106,7 +106,7 @@
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="relative h-screen flex flex-col justify-center items-center px-4 z-10 text-center">
+        <section id="hero" class="relative h-[100dvh] min-h-[600px] flex flex-col justify-center items-center px-4 z-10 text-center">
             <div class="max-w-4xl mx-auto space-y-6">
                 <p
                     class="hero-el opacity-0 transform translate-y-12 text-accent font-semibold tracking-widest text-xs md:text-sm uppercase">
@@ -326,7 +326,7 @@
                         design decision natively translates into a measurable business outcome.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <!-- Step 01 -->
                     <div
                         class="bg-[#fafdf5] p-8 md:p-10 rounded-[2rem] fade-up space-y-5 border border-[#dcedb9] hover:border-brand-mid transition-colors shadow-sm">
@@ -431,7 +431,7 @@
 
                 <div class="flex flex-wrap justify-center gap-6 md:gap-8">
                     <!-- Team Member 1 -->
-                    <div class="group relative w-full md:w-64 h-80 rounded-2xl overflow-hidden fade-up">
+                    <div class="group relative w-[280px] sm:w-[320px] md:w-64 h-80 rounded-2xl overflow-hidden fade-up mx-auto md:mx-0">
                         <div
                             class="absolute inset-0 bg-slate-200 bg-[size:40px_40px] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)]">
                         </div>
@@ -468,7 +468,7 @@
                     </div>
 
                     <!-- Team Member 2 -->
-                    <div class="group relative w-full md:w-64 h-80 rounded-2xl overflow-hidden fade-up">
+                    <div class="group relative w-[280px] sm:w-[320px] md:w-64 h-80 rounded-2xl overflow-hidden fade-up mx-auto md:mx-0">
                         <div
                             class="absolute inset-0 bg-slate-200 bg-[size:40px_40px] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)]">
                         </div>
@@ -504,7 +504,7 @@
                     </div>
 
                     <!-- Team Member 3 -->
-                    <div class="group relative w-full md:w-64 h-80 rounded-2xl overflow-hidden fade-up">
+                    <div class="group relative w-[280px] sm:w-[320px] md:w-64 h-80 rounded-2xl overflow-hidden fade-up mx-auto md:mx-0">
                         <div
                             class="absolute inset-0 bg-slate-200 bg-[size:40px_40px] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)]">
                         </div>
@@ -541,7 +541,7 @@
                     </div>
 
                     <!-- Team Member 4 -->
-                    <div class="group relative w-full md:w-64 h-80 rounded-2xl overflow-hidden fade-up">
+                    <div class="group relative w-[280px] sm:w-[320px] md:w-64 h-80 rounded-2xl overflow-hidden fade-up mx-auto md:mx-0">
                         <div
                             class="absolute inset-0 bg-slate-200 bg-[size:40px_40px] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)]">
                         </div>
@@ -578,7 +578,7 @@
                     </div>
 
                     <!-- Team Member 5 -->
-                    <div class="group relative w-full md:w-64 h-80 rounded-2xl overflow-hidden fade-up">
+                    <div class="group relative w-[280px] sm:w-[320px] md:w-64 h-80 rounded-2xl overflow-hidden fade-up mx-auto md:mx-0">
                         <div
                             class="absolute inset-0 bg-slate-200 bg-[size:40px_40px] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)]">
                         </div>
@@ -615,7 +615,7 @@
                     </div>
 
                     <!-- Team Member 6 -->
-                    <div class="group relative w-full md:w-64 h-80 rounded-2xl overflow-hidden fade-up">
+                    <div class="group relative w-[280px] sm:w-[320px] md:w-64 h-80 rounded-2xl overflow-hidden fade-up mx-auto md:mx-0">
                         <div
                             class="absolute inset-0 bg-slate-200 bg-[size:40px_40px] bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)]">
                         </div>
@@ -784,39 +784,39 @@
                             <label for="contact-first-name" class="text-sm text-slate-500 font-medium">First
                                 Name</label>
                             <input type="text" id="contact-first-name" name="first_name" required
-                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                                 placeholder="Befikru">
                         </div>
                         <div class="space-y-2">
                             <label for="contact-last-name" class="text-sm text-slate-500 font-medium">Last Name</label>
                             <input type="text" id="contact-last-name" name="last_name" required
-                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                                 placeholder="Aschenaki">
                         </div>
                         <div class="space-y-2">
                             <label for="contact-phone" class="text-sm text-slate-500 font-medium">Phone Number</label>
                             <input type="tel" id="contact-phone" name="phone" required
-                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                                 placeholder="+251 900 000 000">
                         </div>
                         <div class="space-y-2">
                             <label for="contact-email" class="text-sm text-slate-500 font-medium">Email</label>
                             <input type="email" id="contact-email" name="email" required
-                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                                 placeholder="befikru@aschenaki.com">
                         </div>
                         <div class="space-y-2">
                             <label for="contact-company" class="text-sm text-slate-500 font-medium">Company
                                 (Optional)</label>
                             <input type="text" id="contact-company" name="company"
-                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                                 placeholder="Company Name">
                         </div>
                         <div class="space-y-2">
                             <label for="contact-role" class="text-sm text-slate-500 font-medium">Role in Company
                                 (Optional)</label>
                             <input type="text" id="contact-role" name="role"
-                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                                class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                                 placeholder="e.g. CMO, Founder">
                         </div>
                     </div>
@@ -824,7 +824,7 @@
                         <label for="contact-message" class="text-sm text-slate-500 font-medium">Project Scope
                             Details</label>
                         <textarea id="contact-message" name="message" rows="4" required
-                            class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent transition-colors"
+                            class="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 transition-all"
                             placeholder="What are your immediate goals?"></textarea>
                     </div>
                     <button type="submit"
