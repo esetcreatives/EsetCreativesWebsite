@@ -329,10 +329,206 @@ function renderProjects(projects) {
 
   document.querySelectorAll('.case-study-card').forEach(card => {
     card.addEventListener('click', () => {
-      window.location.href = `/case-study.html?p=${card.dataset.projectSlug}`
+      openCaseStudyModal(card.dataset.projectSlug)
     })
   })
 }
+
+// ==================== CASE STUDY MODAL LOGIC ====================
+const caseStudyModal = document.getElementById('case-study-modal')
+const closeCaseStudyBtn = document.getElementById('close-case-study')
+const modalProjectContent = document.getElementById('modal-project-content')
+const modalLoader = document.getElementById('modal-loader')
+
+async function openCaseStudyModal(slug) {
+  if (!caseStudyModal) return
+
+  // Show modal and loader
+  caseStudyModal.classList.add('active')
+  modalLoader.style.display = 'flex'
+  modalProjectContent.innerHTML = ''
+  modalProjectContent.classList.add('hidden')
+  document.body.style.overflow = 'hidden' // Prevent background scroll
+
+  try {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('slug', slug)
+      .single()
+
+    if (error) throw error
+
+    if (data) {
+      renderModalProject(data)
+    }
+  } catch (error) {
+    console.error('Error fetching project:', error)
+    modalProjectContent.innerHTML = `
+      <div class="p-12 text-center">
+        <h3 class="text-2xl font-bold text-white mb-4">Error loading project</h3>
+        <p class="text-white/60 mb-8">${error.message}</p>
+        <button onclick="closeModal()" class="px-8 py-3 bg-accent text-slate-950 font-bold rounded-full">Close</button>
+      </div>
+    `
+    modalLoader.style.display = 'none'
+    modalProjectContent.classList.remove('hidden')
+  }
+}
+
+function renderModalProject(project) {
+  const metricsHtml = Object.entries(project.metrics || {}).map(([k, v]) => `
+    <div class="metric-item border-b border-white/10 pb-6 last:border-0 last:pb-0">
+      <div class="text-4xl md:text-5xl font-bold text-accent mb-1">${v}</div>
+      <div class="text-xs text-white/50 uppercase tracking-widest font-semibold">${k}</div>
+    </div>
+  `).join('')
+
+  const galleryHtml = (project.gallery || []).map(img => `
+    <div class="modal-gallery-item overflow-hidden rounded-2xl md:rounded-3xl border border-white/5 shadow-2xl">
+      <img src="${img}" alt="Gallery image" class="w-full h-auto object-cover" loading="lazy">
+    </div>
+  `).join('')
+
+  const heroBg = project.youtube_id ? `
+    <div class="absolute inset-0 z-0">
+      <iframe 
+        class="absolute top-1/2 left-1/2 w-[120%] h-[120%] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-40 mix-blend-screen object-cover"
+        src="https://www.youtube.com/embed/${project.youtube_id}?autoplay=1&mute=1&controls=0&rel=0&loop=1&playlist=${project.youtube_id}" 
+        frameborder="0" allow="autoplay; encrypted-media"></iframe>
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/40 to-brand-dark"></div>
+    </div>
+  ` : `
+    <div class="absolute inset-0 z-0">
+      <img src="${project.hero_image}" class="w-full h-full object-cover opacity-40">
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/40 to-brand-dark"></div>
+    </div>
+  `
+
+  modalProjectContent.innerHTML = `
+    <!-- Hero Section -->
+    <div class="relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col justify-end p-8 md:p-16 overflow-hidden">
+      ${heroBg}
+      <div class="relative z-10 space-y-4">
+        <span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold uppercase tracking-widest text-accent">
+          ${project.category.replace('-', ' ')}
+        </span>
+        <h2 class="modal-title text-4xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight tracking-tight max-w-4xl">
+          ${project.title}
+        </h2>
+      </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 p-8 md:p-16">
+      <div class="lg:col-span-7 space-y-16">
+        <div class="narrative-block">
+          <h4 class="flex items-center gap-3 text-white/50 text-xs font-bold uppercase tracking-[0.2em] mb-6">
+            <span class="w-8 h-[1px] bg-accent"></span> The Challenge
+          </h4>
+          <p class="text-xl md:text-2xl text-white/80 font-light leading-relaxed whitespace-pre-wrap">${project.challenge}</p>
+        </div>
+
+        <div class="narrative-block">
+          <h4 class="flex items-center gap-3 text-white/50 text-xs font-bold uppercase tracking-[0.2em] mb-6">
+            <span class="w-8 h-[1px] bg-accent"></span> The Solution
+          </h4>
+          <p class="text-xl md:text-2xl text-white/80 font-light leading-relaxed whitespace-pre-wrap">${project.solution}</p>
+        </div>
+
+        <div class="narrative-block">
+          <h4 class="flex items-center gap-3 text-white/50 text-xs font-bold uppercase tracking-[0.2em] mb-6">
+            <span class="w-8 h-[1px] bg-accent"></span> The Results
+          </h4>
+          <p class="text-xl md:text-2xl text-white/80 font-light leading-relaxed whitespace-pre-wrap">${project.results}</p>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="lg:col-span-5">
+        <div class="sticky top-8 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 space-y-10">
+          <div>
+            <h4 class="text-white/30 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">Performance Data</h4>
+            <div class="space-y-8">
+              ${metricsHtml}
+            </div>
+          </div>
+          
+          ${project.client_quote ? `
+            <div class="pt-10 border-t border-white/10">
+              <blockquote class="text-xl italic text-white/90 leading-relaxed mb-6">
+                "${project.client_quote}"
+              </blockquote>
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">
+                  ${project.client_name ? project.client_name.charAt(0) : 'C'}
+                </div>
+                <div>
+                  <div class="font-bold text-white">${project.client_name || 'Client'}</div>
+                  <div class="text-xs text-white/50">${project.client_role || ''}</div>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      </aside>
+    </div>
+
+    <!-- Gallery -->
+    <div class="p-8 md:p-16 space-y-8 md:space-y-16">
+      <h4 class="text-center text-white/30 text-[10px] font-bold uppercase tracking-[0.3em]">Project Showcase</h4>
+      <div class="space-y-12 md:space-y-24 max-w-6xl mx-auto">
+        ${galleryHtml}
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-accent p-12 md:p-24 text-center">
+      <h3 class="text-3xl md:text-5xl font-heading font-bold text-slate-950 mb-8 tracking-tight">Ready for similar impact?</h3>
+      <button onclick="closeModalAndScrollToContact()" class="px-10 py-5 bg-slate-950 text-white font-bold rounded-full text-xl hover:scale-105 transition-transform">
+        Start Your Project
+      </button>
+    </div>
+  `
+
+  modalLoader.style.display = 'none'
+  modalProjectContent.classList.remove('hidden')
+
+  // Animate Content
+  gsap.from('.modal-title', { y: 50, opacity: 0, duration: 1, ease: 'power4.out', delay: 0.2 })
+  gsap.from('.narrative-block', { y: 30, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 0.4 })
+  gsap.from('.metric-item', { scale: 0.9, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'back.out(1.7)', delay: 0.6 })
+}
+
+function closeModal() {
+  caseStudyModal.classList.remove('active')
+  document.body.style.overflow = ''
+}
+
+window.closeModalAndScrollToContact = () => {
+  closeModal()
+  setTimeout(() => {
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, 400)
+}
+
+if (closeCaseStudyBtn) {
+  closeCaseStudyBtn.addEventListener('click', closeModal)
+}
+
+caseStudyModal?.addEventListener('click', (e) => {
+  if (e.target === caseStudyModal) closeModal()
+})
+
+// Escape key to close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && caseStudyModal.classList.contains('active')) {
+    closeModal()
+  }
+})
 
 filterButtons.forEach(btn => {
   btn.addEventListener('click', () => {
